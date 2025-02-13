@@ -12,10 +12,10 @@ df = pd.read_csv("ship_fuel_efficiency.csv")
 X = pd.get_dummies(df, columns=['ship_type', 'fuel_type', 'weather_conditions'])
 
 # Define features and target
-X_dist = df[['ship_type', 'fuel_type', 'CO2_emissions', 'fuel_consumption', 'weather_conditions']]
+X_dist = df[['ship_type', 'fuel_type', 'fuel_consumption', 'weather_conditions']]
 y_dist = df['distance']
 
-X_fuel = df[['ship_type', 'fuel_type', 'CO2_emissions', 'distance', 'weather_conditions']]
+X_fuel = df[['ship_type', 'fuel_type', 'distance', 'weather_conditions']]
 y_fuel = df['fuel_consumption']
 
 X = df[['ship_type', 'fuel_type', 'distance', 'fuel_consumption', 'weather_conditions']]
@@ -26,21 +26,16 @@ encoder = OrdinalEncoder()
 
 encoder.fit(df[['ship_type', 'fuel_type', 'weather_conditions']])
 
-X_dist[['ship_type', 'fuel_type', 'weather_conditions']] = encoder.transform(
-    X_dist[['ship_type', 'fuel_type', 'weather_conditions']]
-)
-X_fuel[['ship_type', 'fuel_type', 'weather_conditions']] = encoder.transform(
-    X_fuel[['ship_type', 'fuel_type', 'weather_conditions']]
-)
-X[['ship_type', 'fuel_type', 'weather_conditions']] = encoder.transform(
-    X[['ship_type', 'fuel_type', 'weather_conditions']])
-
+for dataset in [X_dist, X_fuel, X]:
+    dataset[['ship_type', 'fuel_type', 'weather_conditions']] = encoder.transform(
+        dataset[['ship_type', 'fuel_type', 'weather_conditions']]
+    )
 # Scale numerical features
 scaler_dist = MinMaxScaler()
-X_dist[['CO2_emissions', 'fuel_consumption']] = scaler_dist.fit_transform(X_dist[['CO2_emissions', 'fuel_consumption']].values)
+X_dist[['fuel_consumption']] = scaler_dist.fit_transform(X_dist[['fuel_consumption']].values)
 
 scaler_fuel = MinMaxScaler()
-X_fuel[['CO2_emissions', 'distance']] = scaler_fuel.fit_transform(X_fuel[['CO2_emissions', 'distance']].values)
+X_fuel[['distance']] = scaler_fuel.fit_transform(X_fuel[['distance']].values)
 
 scaler = MinMaxScaler()
 X[['distance', 'fuel_consumption']] = scaler.fit_transform(
@@ -76,6 +71,8 @@ r2_fuel = r2_score(y_fuel_test, fuel_pred)
 
 mae = mean_absolute_error(y_test, co2_pred)
 r2 = r2_score(y_test, co2_pred)
+
+#print(r2,r2_dist,r2_fuel)
 
 #feature_importances = pd.Series(model_fuel.feature_importances_, index=X_fuel.columns)
 #print(feature_importances.sort_values(ascending=False))
