@@ -7,7 +7,7 @@ from sklearn.preprocessing import OrdinalEncoder, MinMaxScaler
 from sklearn.metrics import mean_absolute_error, r2_score, mean_squared_error, mean_absolute_percentage_error
 
 # Load dataset
-df = pd.read_csv("expanded_ship_fuel_efficiency.csv")
+df = pd.read_csv("highly_realistic_ship_fuel_efficiency.csv")
 
 X = pd.get_dummies(df, columns=['ship_type', 'fuel_type', 'weather_conditions'])
 

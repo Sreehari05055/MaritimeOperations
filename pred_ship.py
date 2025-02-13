@@ -19,23 +19,23 @@ with open("model/scaler_fuel.pkl", "rb") as file:
     scaler_fuel = pickle.load(file)
 
 new_data = {
-    'ship_type': ['Oil Service Boat'],  # Replace with a valid ship type from your data
-    'fuel_type': ['Diesel'],  # Replace with a valid fuel type from your data
-    'distance': [58.9],  # Distance value for the ship
-    'fuel_consumption': [734.45],  # The fuel consumption you want to test
-    'weather_conditions': ['Stormy']  # Replace with a valid weather condition from your data
+    'ship_type': ['Oil Service Boat'],
+    'fuel_type': ['Diesel'],
+    'distance': [58.9],
+    'fuel_consumption': [855.45],
+    'weather_conditions': ['Calm']
 }
 new_data_oil = {
-    'ship_type': ['Oil Service Boat'],  # Replace with a valid ship type from your data
-    'fuel_type': ['Diesel'],  # Replace with a valid fuel type from your data
-    'distance': [173.9],  # Distance value for the ship
-    'weather_conditions': ['Calm']  # Replace with a valid weather condition from your data
+    'ship_type': ['Oil Service Boat'],
+    'fuel_type': ['Diesel'],
+    'distance': [23.9],
+    'weather_conditions': ['Moderate']
 }
 new_data_dist = {
-    'ship_type': ['Oil Service Boat'],  # Replace with a valid ship type from your data
-    'fuel_type': ['HFO'],  # Replace with a valid fuel type from your data
+    'ship_type': ['Oil Service Boat'],
+    'fuel_type': ['Diesel'],
     'fuel_consumption': [734.45],
-    'weather_conditions': ['Calm']  # Replace with a valid weather condition from your data
+    'weather_conditions': ['Calm']
 }
 
 # Convert to DataFrame
@@ -63,12 +63,11 @@ new_data_dist_pred[['fuel_consumption']] = scaler_dist.transform(
     new_data_dist_pred[['fuel_consumption']].values
 )
 
-# Predict CO₂ emissions using the trained model
+# Predict using the trained model
 predicted_CO2 = model.predict(new_data_co2)
 predicted_fuel = model_fuel.predict(new_data_fuel)
 predicted_dist = model_dist.predict(new_data_dist_pred)
 
-# Predict CO₂ emissions using the trained model
 
 # Display the predicted CO₂ emissions for the given input
 print(f"Fuel Consumption: {new_data['fuel_consumption'][0]} Liters --> Predicted CO₂ Emissions: {predicted_CO2[0]:.2f} Kg")
