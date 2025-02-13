@@ -1,6 +1,5 @@
 import pickle
 import pandas as pd
-import numpy
 
 with open("model/ship_co2.pkl", "rb") as file:
     model = pickle.load(file)
@@ -29,7 +28,7 @@ new_data = {
 new_data_oil = {
     'ship_type': ['Oil Service Boat'],  # Replace with a valid ship type from your data
     'fuel_type': ['Diesel'],  # Replace with a valid fuel type from your data
-    'distance': [116.9],  # Distance value for the ship
+    'distance': [173.9],  # Distance value for the ship
     'weather_conditions': ['Calm']  # Replace with a valid weather condition from your data
 }
 new_data_dist = {
@@ -40,7 +39,6 @@ new_data_dist = {
 }
 
 # Convert to DataFrame
-
 new_data_co2 = pd.DataFrame(new_data)
 
 new_data_co2[['ship_type', 'fuel_type', 'weather_conditions']] = encoder.transform(
@@ -75,4 +73,4 @@ predicted_dist = model_dist.predict(new_data_dist_pred)
 # Display the predicted CO₂ emissions for the given input
 print(f"Fuel Consumption: {new_data['fuel_consumption'][0]} Liters --> Predicted CO₂ Emissions: {predicted_CO2[0]:.2f} Kg")
 print(f"Distance: {new_data_oil['distance'][0]} Km --> Predicted Fuel Consumption: {predicted_fuel[0]:.2f} Liters")
-#print(f"Fuel Consumption: {new_data_dist['fuel_consumption'][0]} Liters --> Predicted Distance: {predicted_dist[0]:.2f} Km")
+print(f"Fuel Consumption: {new_data_dist['fuel_consumption'][0]} Liters --> Predicted Distance: {predicted_dist[0]:.2f} Km")
