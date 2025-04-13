@@ -6,7 +6,7 @@ from sklearn.model_selection import train_test_split, cross_val_score
 from sklearn.preprocessing import OrdinalEncoder, MinMaxScaler
 
 # Load dataset
-df = pd.read_csv("highly_realistic_ship_fuel_efficiency.csv")
+df = pd.read_csv("ship_fuel_efficiency.csv")
 
 X = pd.get_dummies(df, columns=['ship_type', 'fuel_type', 'weather_conditions'])
 
